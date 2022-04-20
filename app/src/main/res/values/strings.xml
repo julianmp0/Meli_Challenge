@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Meli Challenge</string>
+    <string name="title_appbar">Meli Challenge</string>
 </resources>
