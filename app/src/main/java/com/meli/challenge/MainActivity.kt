@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -74,7 +75,7 @@ fun ProgressView() {
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .blur(30.dp).background(Color.Red)
+            .background(colorResource(id = R.color.background_alpha))
 
     ) {
         Column(
