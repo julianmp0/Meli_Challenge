@@ -25,16 +25,17 @@ class MainViewModel @Inject constructor(
     val isLoading: State<Boolean> get() = _isLoading
 
 
-    fun search(){
+    fun search(search: String) {
         viewModelScope.launch {
             searchRepository.searchItems(
+                search,
                 onStart = { _isLoading.value = true },
                 onCompletion = { _isLoading.value = false },
                 onError = {
-
+                    it
                 }
             ).collect {
-                it
+                _searchResponse.value = it
             }
         }
 

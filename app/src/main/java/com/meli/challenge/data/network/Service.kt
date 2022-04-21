@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface Service {
 
-    @GET("sites/{site}}/search")
+    @GET("sites/{site}/search")
     suspend fun searchItemsByQuery(
         @Path("site") site: String,
         @Query("q") search: String

@@ -1,6 +1,5 @@
 package com.meli.challenge.data.repositories
 
-import com.meli.challenge.data.models.ResponseSearchModel
 import com.meli.challenge.data.network.Service
 import com.skydoves.sandwich.message
 import com.skydoves.sandwich.onError
@@ -18,12 +17,13 @@ class SearchRepository @Inject constructor(
 ) {
 
     fun searchItems(
+        search: String,
         onStart: () -> Unit,
         onCompletion: () -> Unit,
         onError: (String) -> Unit
     ) = flow {
 
-        service.searchItemsByQuery("MLA","Motorola%20G6")
+        service.searchItemsByQuery("MLA", search = search)
             .suspendOnSuccess {
                 emit(data)
             }

@@ -6,13 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,11 +23,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.meli.challenge.R
+import com.meli.challenge.data.models.ResponseSearchModel
+import com.meli.challenge.data.models.Result
 import com.meli.challenge.ui.theme.MeliChallengeTheme
 import com.meli.challenge.ui.viewmodels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     val viewModel: MainViewModel by viewModels()
@@ -45,16 +47,15 @@ class MainActivity : ComponentActivity() {
 
                     ) {
                     val textSearchState = rememberSaveable { mutableStateOf("") }
-                    val isSearching = rememberSaveable { mutableStateOf(false) }
 
                     Box {
                         Column() {
                             SearchView(state = textSearchState) {
-                                isSearching.value = true
-                                viewModel.search()
+                                viewModel.search(it)
                             }
+                            ListItems(viewModel.searchResponse)
                         }
-                        if (isSearching.value) {
+                        if (viewModel.isLoading.value) {
                             ProgressView()
                         }
                     }
@@ -62,7 +63,27 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+
 }
+@Composable
+private fun ListItems(searchResponse: State<ResponseSearchModel?>) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ){
+        items(searchResponse.value!!.results){ model->
+            ItemView(model)
+        }
+    }
+}
+
+@Composable
+private fun ItemView(model: Result){
+
+}
+
 
 @Composable
 fun TopBar() {
@@ -147,7 +168,6 @@ fun DefaultPreview() {
 @Composable
 fun SearchViewPreview() {
     MeliChallengeTheme {
-
         val textState = remember { mutableStateOf("Hola") }
         SearchView(textState, null)
     }
