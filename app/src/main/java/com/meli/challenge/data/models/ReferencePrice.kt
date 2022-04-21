@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ReferencePrice(
     @SerializedName("amount")
-    val amount: Int,
+    val amount: Float,
     @SerializedName("conditions")
     val conditions: ConditionsX,
     @SerializedName("currency_id")

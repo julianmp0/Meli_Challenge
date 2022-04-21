@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ExcludedX(
     @SerializedName("real_rate")
-    val realRate: Int,
+    val realRate: Float,
     @SerializedName("real_value")
-    val realValue: Int
+    val realValue: Float
 )
