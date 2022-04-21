@@ -1,8 +1,9 @@
-package com.meli.challenge
+package com.meli.challenge.ui.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -23,9 +24,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.meli.challenge.R
 import com.meli.challenge.ui.theme.MeliChallengeTheme
+import com.meli.challenge.ui.viewmodels.MainViewModel
 
 class MainActivity : ComponentActivity() {
+
+    val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -44,7 +51,7 @@ class MainActivity : ComponentActivity() {
                         Column() {
                             SearchView(state = textSearchState) {
                                 isSearching.value = true
-                                it.length
+                                viewModel.search()
                             }
                         }
                         if (isSearching.value) {
