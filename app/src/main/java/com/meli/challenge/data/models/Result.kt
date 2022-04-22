@@ -2,6 +2,7 @@ package com.meli.challenge.data.models
 
 
 import com.google.gson.annotations.SerializedName
+import java.lang.StringBuilder
 
 data class Result(
     @SerializedName("accepts_mercadopago")
@@ -82,4 +83,22 @@ data class Result(
     val useThumbnailId: Boolean,
     @SerializedName("winner_item_id")
     val winnerItemId: Any
-)
+) {
+    fun buildSellerAdress(): String? {
+        val result = StringBuilder()
+
+        sellerAddress.let {
+            if (it.state.name.isNullOrEmpty().not()){
+                result.append(it.state.name)
+            }
+            if (it.city.name.isNullOrEmpty().not()){
+                if (result.isNotEmpty()){
+                    result.append(", ")
+                }
+                result.append(it.city.name)
+            }
+        }
+
+        return if (result.isNotEmpty()) result.toString() else null
+    }
+}

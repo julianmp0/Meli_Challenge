@@ -23,7 +23,7 @@ class SearchRepository @Inject constructor(
         onError: (String) -> Unit
     ) = flow {
 
-        service.searchItemsByQuery("MLA", search = search)
+        service.searchItemsByQuery("MCO", search = search)
             .suspendOnSuccess {
                 emit(data)
             }
